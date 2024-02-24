@@ -1,13 +1,14 @@
 from django.urls import path
 from rest_framework.routers import SimpleRouter
 
-from trade.views import BuyItemView
+from raid.views import RaidView
 
 
-app_name = 'trade'
+app_name = 'raid'
 router = SimpleRouter()
+
 urlpatterns = router.urls
 
 urlpatterns += [
-    path('buy_item/', BuyItemView.as_view())
+    path('send_hero/', RaidView.as_view()),
 ]

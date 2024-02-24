@@ -7,7 +7,7 @@ User = get_user_model()
 
 class Hero(models.Model):
     name = models.CharField(max_length=32, unique=True, blank=False)
-    user = models.OneToOneField(User, on_delete=models.DO_NOTHING)
+    user = models.OneToOneField(User, on_delete=models.DO_NOTHING, related_name='hero')
 
     def __str__(self):
         return self.name

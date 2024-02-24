@@ -2,8 +2,10 @@ from django.contrib import admin
 
 from hero.models import Storage, Hero, StorageRow, InventoryItem
 
-admin.site.register(Storage)
-admin.site.register(StorageRow)
+
+class StorageRowInline(admin.TabularInline):
+    model = StorageRow
+    extra = 0
 
 
 class InventoryItemInline(admin.TabularInline):
@@ -14,3 +16,8 @@ class InventoryItemInline(admin.TabularInline):
 @admin.register(Hero)
 class HeroAdmin(admin.ModelAdmin):
     inlines = (InventoryItemInline,)
+
+
+@admin.register(Storage)
+class StorageAdmin(admin.ModelAdmin):
+    inlines = (StorageRowInline,)
