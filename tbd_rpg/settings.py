@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'items',
     'trade',
     'tools',
+    'enemies',
     'django_extensions',
     'drf_spectacular',
 ]

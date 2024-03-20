@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.core.management import BaseCommand
 from django.db import transaction
 
+from enemies.models import Enemy
 from hero.models import Hero, Storage, StorageRow, InventoryItem
 from items.models import Item
 
@@ -44,3 +45,11 @@ class Command(BaseCommand):
 
             InventoryItem.objects.create(hero=hero, slot=Item.Slots.SLOT_HEAD, item=bronze_helm)
             InventoryItem.objects.create(hero=hero, slot=Item.Slots.SLOT_CHEST, item=bronze_chest)
+
+            Enemy.objects.create(
+                name='Дикий кабан',
+                hp=60,
+                armor=1,
+                attack=7,
+                attack_delay=350,
+            )

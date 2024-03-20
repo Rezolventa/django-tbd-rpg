@@ -6,7 +6,6 @@ from raid.views import RaidView
 
 app_name = 'raid'
 router = SimpleRouter()
-
 urlpatterns = router.urls
 
 urlpatterns += [
