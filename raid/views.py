@@ -13,9 +13,10 @@ from items.models import Item
 
 
 # Тестовый пример: игрок против двух диких кабанов
-
 class Combatant:
-    def __init__(self, hp, armor, attack, attack_delay):
+    def __init__(self, name, hp, armor, attack, attack_delay):
+        self.name = name
+
         self.hp = hp
         self.armor = armor
         self.attack = attack
@@ -25,10 +26,15 @@ class Combatant:
         self.attack_counter = 0
         self.target = None
 
-    def attack(self, target):  # target: Combatant
-        target.hp -= self.attack
-        if target.hp <= 0:
-            target.die()
+    def attack(self):
+        self.target.hp -= self.attack
+        print(f'{self.name} attacks {self.target} for {self.attack}')
+        if self.target.hp <= 0:
+            self.target.die()
+
+    def die(self):
+        self.alive = False
+        print(f'{self.name} dies!')
 
 
 class EnemyInCombat(Combatant):
@@ -43,21 +49,36 @@ class CombatController:
     def __init__(self, player: PlayerInCombat, enemies: list[EnemyInCombat]):
         self.player = player
         self.enemies = enemies
+        self.result = None
+
+    def set_target(self, combatant: [PlayerInCombat, EnemyInCombat]):
+        if combatant is PlayerInCombat:
+            alive_enemies = [enemy for enemy in self.enemies if enemy.alive]
+            return alive_enemies[0]
+        elif combatant is EnemyInCombat:
+            return self.player
 
     def continue_criteria(self):
         return not(self.player.alive or any([enemy.alive for enemy in self.enemies]))
 
     def combat_result(self):
+        all_combatants = self.enemies + [self.player]
         while self.continue_criteria():
-            all_combatants = [self.enemies] + [self.player]
+            no_target_combatants = [combatant for combatant in all_combatants if combatant.target is None]
+            for combatant in no_target_combatants:
+                combatant.set_target()
             for combatant in all_combatants:
                 combatant.attack_counter += 1
-
-
+                if combatant.attack_counter == combatant.attack_delay:
+                    combatant.attack()
+        if self.player.alive:
+            self.result = 'survived'
+        else:
+            self.result = 'died'
 
 
 def send_to_raid(hero: Hero) -> dict:
-    player = PlayerInCombat(100, 2, 12, 170)  # тестовый герой
+    player = PlayerInCombat('hero', 100, 2, 12, 170)
     boar1 = Enemy.objects.get('Дикий кабан')
     boar2 = Enemy.objects.get('Дикий кабан')
     CombatController(player, [boar1, boar2])
@@ -68,6 +89,17 @@ def send_to_raid(hero: Hero) -> dict:
         return {'result': 'survived', 'loot': raid_loot}
     else:
         return {'result': 'dead', 'loot': None}
+
+
+def convert_instance_to_combatant(instance: Enemy):
+    combatant = EnemyInCombat(
+        name=instance.name,
+        hp=instance.hp,
+        armor=instance.armor,
+        attack=instance.attack,
+        attack_delay=instance.attack
+    )
+    return combatant
 
 
 def get_raid_loot() -> list[dict]:
