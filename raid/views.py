@@ -46,15 +46,17 @@ class Combatant:
 
 
 class EnemyInCombat(Combatant):
-    # def set_target(self, player):
-    #     self.target = player
-    pass
+    def __init__(self, instance: Enemy):
+        super().__init__(
+            name=instance.name,
+            hp=instance.hp,
+            armor=instance.armor,
+            attack=instance.attack,
+            attack_delay=instance.attack
+        )
 
 
 class PlayerInCombat(Combatant):
-    # def set_target(self, enemy_team):
-    #     alive_enemies = [enemy for enemy in self.enemies if enemy.alive]
-    #     self.target = alive_enemies[0]
     pass
 
 
@@ -78,60 +80,45 @@ class CombatController:
         return self.player.alive and any([enemy.alive for enemy in self.enemies])
 
     def combat_result(self):
-        all_combatants = [combatant for combatant in self.enemies + [self.player] if combatant.alive]
-        while self.continue_criteria():
-            # all_combatants = [combatant for combatant in self.enemies + [self.player] if combatant.alive]
-            no_target_combatants = [combatant for combatant in all_combatants if combatant.target is None]
-            for combatant in no_target_combatants:
-                self.set_target(combatant)
-            for combatant in all_combatants:
-                combatant.attack_counter += 1
-                if combatant.attack_counter == combatant.attack_delay:
-                    dead_this_turn = combatant.make_attack()
-                    for dead in dead_this_turn:
-                        all_combatants.remove(dead)
+        self.exec_combat_loop()
+
         if self.player.alive:
             self.result = 'survived'
         else:
             self.result = 'died'
 
+    def exec_combat_loop(self):
+        all_combatants = [combatant for combatant in self.enemies + [self.player] if combatant.alive]
 
-def convert_model_to_combatant(instance: Enemy):
-    return EnemyInCombat(
-        name=instance.name,
-        hp=instance.hp,
-        armor=instance.armor,
-        attack=instance.attack,
-        attack_delay=instance.attack_delay,
-    )
+        while True:
+            no_target_combatants = [combatant for combatant in all_combatants if combatant.target is None]
+            for combatant in no_target_combatants:
+                self.set_target(combatant)
+            for combatant in all_combatants:
+                if not combatant.alive:
+                    continue
+                combatant.attack_counter += 1
+                if combatant.attack_counter == combatant.attack_delay:
+                    dead_this_turn = combatant.make_attack()
+                    for dead in dead_this_turn:
+                        all_combatants.remove(dead)
+                        if not self.continue_criteria():
+                            return
 
 
 def send_to_raid(hero: Hero) -> dict:
-    player = PlayerInCombat('hero', 100, 2, 12, 170)
-    boar1 = convert_model_to_combatant(Enemy.objects.get(name='Дикий кабан'))
-    boar2 = convert_model_to_combatant(Enemy.objects.get(name='Дикий кабан'))
+    player = PlayerInCombat('hero', 100, 2, 12, 17)
+    boar1 = EnemyInCombat(Enemy.objects.get(name='Дикий кабан'))
+    boar2 = EnemyInCombat(Enemy.objects.get(name='Дикий кабан'))
     combat_controller = CombatController(player=player, enemies=[boar1, boar2])
     combat_controller.combat_result()
 
-    # survived = random.randint(1, 100) >= 70
-    # if survived:
     if combat_controller.result == 'survived':
         raid_loot = get_raid_loot()
         add_loot_to_inventory(raid_loot, hero)
         return {'result': 'survived', 'loot': raid_loot}
     else:
         return {'result': 'dead', 'loot': None}
-
-
-def convert_instance_to_combatant(instance: Enemy):
-    combatant = EnemyInCombat(
-        name=instance.name,
-        hp=instance.hp,
-        armor=instance.armor,
-        attack=instance.attack,
-        attack_delay=instance.attack
-    )
-    return combatant
 
 
 def get_raid_loot() -> list[dict]:
