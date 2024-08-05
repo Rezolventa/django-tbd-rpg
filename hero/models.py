@@ -1,5 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.db.models import Sum
+
 from items.models import Item
 
 User = get_user_model()
@@ -14,6 +16,21 @@ class Hero(models.Model):
 
     class Meta:
         verbose_name_plural = 'heroes'
+
+    @property
+    def armor(self):
+        result = self.inventoryitem_set.filter(item__armor__isnull=False).aggregate(total_armor=Sum('item__armor'))
+        return result.get('total_armor')
+
+    @property
+    def damage(self):
+        result = self.inventoryitem_set.filter(item__damage__isnull=False).aggregate(total_damage=Sum('item__damage'))
+        return result.get('total_damage')
+
+    @property
+    def weight(self):
+        result = self.inventoryitem_set.filter(item__weight__isnull=False).aggregate(total_weight=Sum('item__weight'))
+        return result.get('total_weight')
 
 
 class Storage(models.Model):

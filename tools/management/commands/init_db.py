@@ -25,19 +25,23 @@ class Command(BaseCommand):
                 name='Iron Sword',
                 type=Item.Types.TYPE_EQUIPMENT,
                 slot=Item.Slots.SLOT_RHAND,
-                weight=2.3
+                weight=2.3,
+                damage=12,
+                attack_delay=6,
             )
             bronze_helm = Item.objects.create(
                 name='Bronze Helm',
                 type=Item.Types.TYPE_EQUIPMENT,
                 slot=Item.Slots.SLOT_HEAD,
-                weight=3
+                weight=3,
+                armor=2,
             )
             bronze_chest = Item.objects.create(
                 name='Bronze Chest',
                 type=Item.Types.TYPE_EQUIPMENT,
                 slot=Item.Slots.SLOT_CHEST,
-                weight=6
+                weight=6,
+                armor=3,
             )
 
             StorageRow.objects.create(storage=storage, item=iron_ore, count=13)
