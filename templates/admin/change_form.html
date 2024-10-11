@@ -1,0 +1,10 @@
+{% extends "admin/change_form.html" %}
+
+{% block content %}
+    {{ block.super }}
+    <div>
+        {{ custom_html|safe }}
+        <h2>CUSTOM HTML HERE FROM TEMPLATE</h2>
+        <h2>CUSTOM HTML HERE FROM TEMPLATE</h2>
+    </div>
+{% endblock %}
