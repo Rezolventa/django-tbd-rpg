@@ -1,3 +1,4 @@
 .idea
 /venv/
+env
 tbd_rpg/local.py
