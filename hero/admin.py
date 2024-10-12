@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.template.loader import render_to_string
 
 from hero.models import Storage, Hero, StorageRow, InventoryItem
 
@@ -32,7 +33,7 @@ class HeroAdmin(admin.ModelAdmin):
 
     def change_view(self, request, object_id, form_url="", extra_context=None):
         extra_context = extra_context or {}
-        extra_context['custom_html'] = '<h1>CUSTOM HTML HERE</h1>'
+        extra_context['custom_html'] = render_to_string('admin/hero_doll_form.html')
         return super().change_view(request, object_id, form_url, extra_context=extra_context)
 
 
