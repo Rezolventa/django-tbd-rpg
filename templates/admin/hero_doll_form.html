@@ -1,7 +1,14 @@
 {% load static %}
 <table>
     <tr>
-        <td>A1</td>
+        <td>
+            A1
+            <select name="dropdown">
+                {% for option in helm_options %}
+                    <option value="{{ option }}">{{ option }}</option>
+                {% endfor %}
+            </select>
+        </td>
         <td colspan="3" rowspan="5">
             <img src="{% static 'crusader-paper-doll.jpg' %}">
         </td>
