@@ -1,24 +1,28 @@
 {% load static %}
-{#<script>#}
-{#    document.addEventListener('DOMContentLoaded', function() {#}
-{#        const helmSelector = document.getElementById('helmSelector');#}
-{#        const helmImage = document.getElementById('helmImage');#}
-{##}
-{#        helmSelector.addEventListener('change', function() {#}
-{#            const selectedOption = helmSelector.options[helmSelector.selectedIndex];#}
-{#            const imageSrc = selectedOption.getAttribute('data-image');#}
-{#            helmImage.src = imageSrc;#}
-{#        });#}
-{#    });#}
-{#</script>#}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const helmSelector = document.getElementById('helmSelector');
+        const helmImage = document.getElementById('helmImage');
+
+        helmSelector.addEventListener('change', function() {
+            const selectedOption = helmSelector.options[helmSelector.selectedIndex];
+            const imageSrc = selectedOption.getAttribute('data-image');
+            helmImage.src = imageSrc;
+        });
+    });
+</script>
 <table>
     <tr>
         <td>
             ШЛЕМ
             <br>
-            <img id="helmImage" src="{% static '1218741.png' %}" height="64" width="64">
+            <img id="helmImage" src="{{ images.helm.image }}" height="64" width="64">
             <br>
-            {{ hero_form.helm }}
+            <select name="helm" class="form-control" id="helmSelector">
+            {% for helm_info in options.helm %}
+                <option value="{{ helm_info.name }}" data-image="{{ helm_info.image }}">{{ helm_info.name }}</option>
+            {% endfor %}
+            </select>
         </td>
         <td colspan="3" rowspan="5">
             <img src="{% static 'crusader-paper-doll.jpg' %}">

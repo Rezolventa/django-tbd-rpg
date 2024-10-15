@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.template.loader import render_to_string
+from rest_framework import serializers
 
 from hero.form import HeroForm
 from hero.models import Storage, Hero, StorageRow, InventoryItem
@@ -38,6 +39,15 @@ class HeroAdmin(admin.ModelAdmin):
         extra_context['source'] = 'hero'
         extra_context['custom_html'] = render_to_string('admin/hero_doll_form.html')
         helms = Item.objects.filter(slot=Item.Slots.SLOT_HEAD)
+        extra_context['options'] = {'helm': DisplayedItemSerializer(helms, many=True).data}
+        extra_context['images'] = {'helm': DisplayedItemSerializer(helms.first()).data}
+        return super().change_view(request, object_id, form_url, extra_context=extra_context)
+
+    def add_form_data(self, extra_context: dict, helms):  # DEPRECATED
+        """
+        Передаёт данные в шаблон через форму.
+        Пока не используется. Оставил на случай, если придётся к нему вернуться.
+        """
         hero_form = HeroForm(
             options={
                 'helms': {
@@ -48,7 +58,12 @@ class HeroAdmin(admin.ModelAdmin):
         )
         hero_form.is_valid()
         extra_context['hero_form'] = hero_form
-        return super().change_view(request, object_id, form_url, extra_context=extra_context)
+
+
+class DisplayedItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Item
+        fields = ('name', 'image')
 
 
 @admin.register(Storage)
