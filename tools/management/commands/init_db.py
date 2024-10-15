@@ -20,6 +20,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         with transaction.atomic():
+            self.wipe_db()
             hero = Hero.objects.create(user=User.objects.get(username='admin'), name='Admin')
             storage = Storage.objects.create(hero=hero)
 

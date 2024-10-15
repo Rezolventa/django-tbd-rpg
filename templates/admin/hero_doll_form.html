@@ -1,13 +1,24 @@
 {% load static %}
+{#<script>#}
+{#    document.addEventListener('DOMContentLoaded', function() {#}
+{#        const helmSelector = document.getElementById('helmSelector');#}
+{#        const helmImage = document.getElementById('helmImage');#}
+{##}
+{#        helmSelector.addEventListener('change', function() {#}
+{#            const selectedOption = helmSelector.options[helmSelector.selectedIndex];#}
+{#            const imageSrc = selectedOption.getAttribute('data-image');#}
+{#            helmImage.src = imageSrc;#}
+{#        });#}
+{#    });#}
+{#</script>#}
 <table>
     <tr>
         <td>
-            A1
-            <select name="dropdown">
-                {% for option in helm_options %}
-                    <option value="{{ option }}">{{ option }}</option>
-                {% endfor %}
-            </select>
+            ШЛЕМ
+            <br>
+            <img id="helmImage" src="{% static '1218741.png' %}" height="64" width="64">
+            <br>
+            {{ hero_form.helm }}
         </td>
         <td colspan="3" rowspan="5">
             <img src="{% static 'crusader-paper-doll.jpg' %}">
