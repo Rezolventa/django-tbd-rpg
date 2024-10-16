@@ -34,9 +34,6 @@ class Command(BaseCommand):
             for weapon in self.create_weapons() + self.create_armor():
                 StorageRow.objects.create(storage=storage, item=weapon, count=1)
 
-            # InventoryItem.objects.create(hero=hero, slot=Item.Slots.SLOT_HEAD, item=bronze_helm)
-            # InventoryItem.objects.create(hero=hero, slot=Item.Slots.SLOT_CHEST, item=bronze_chest)
-
             Enemy.objects.create(
                 name='Дикий кабан',
                 hp=60,
@@ -87,6 +84,7 @@ class Command(BaseCommand):
     def create_armor(self):
         iron_helm = Item.objects.create(
             name='Iron Helm',
+            image='/static/iron_helm.png',
             type=Item.Types.TYPE_EQUIPMENT,
             slot=Item.Slots.SLOT_HEAD,
             weight=3.6,
@@ -94,6 +92,7 @@ class Command(BaseCommand):
         )
         bronze_helm = Item.objects.create(
             name='Bronze Helm',
+            image='/static/bronze_helm.png',
             type=Item.Types.TYPE_EQUIPMENT,
             slot=Item.Slots.SLOT_HEAD,
             weight=3,
