@@ -3,7 +3,7 @@ from django.core.management import BaseCommand
 from django.db import transaction
 
 from enemies.models import Enemy
-from hero.models import Hero, Storage, StorageRow, InventoryItem
+from hero.models import Hero, Storage, StorageRow, HeroEquipment, HeroInventory, HeroInventoryItem
 from items.models import Item
 
 User = get_user_model()
@@ -13,7 +13,7 @@ class Command(BaseCommand):
     def wipe_db(self):
         Enemy.objects.all().delete()
         Hero.objects.all().delete()
-        InventoryItem.objects.all().delete()
+        HeroEquipment.objects.all().delete()
         Storage.objects.all().delete()
         StorageRow.objects.all().delete()
         Item.objects.all().delete()
@@ -21,8 +21,10 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         with transaction.atomic():
             self.wipe_db()
+
             hero = Hero.objects.create(user=User.objects.get(username='admin'), name='Admin')
             storage = Storage.objects.create(hero=hero)
+            inventory = HeroInventory.objects.create(hero=hero)
 
             iron_ore = Item.objects.create(
                 name='Iron Ore',
@@ -30,6 +32,7 @@ class Command(BaseCommand):
                 weight=1
             )
             StorageRow.objects.create(storage=storage, item=iron_ore, count=13)
+            HeroInventoryItem.objects.create(inventory=inventory, item=iron_ore, count=7)
 
             for weapon in self.create_weapons() + self.create_armor():
                 StorageRow.objects.create(storage=storage, item=weapon, count=1)

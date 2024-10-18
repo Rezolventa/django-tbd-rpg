@@ -1,0 +1,39 @@
+<ul class="nav nav-tabs nav-justified">
+{#    <li class="tab{% if user_menu == 'main' %} active{% endif %}">#}
+    <li class="tab ">
+        <a href="">
+            <span><i class="fa fa-home hidden-sm"></i></span>
+            <span class="hidden-xs">Вкладка 1</span>
+        </a>
+    </li>
+
+{#    <li class="tab{% if user_menu == 'devices' %} active{% endif %}">#}
+{#        <a href="{% url 'tvadmin:user_devices' showuser.id %}">#}
+{#            <span><i class="fa fa-sm md-devices hidden-sm"></i></span>#}
+{#            <span class="hidden-xs">{% trans 'Devices' %}#}
+{#                <span class="label label-success">{{ showuser.devices_count }}</span>#}
+{#            </span>#}
+{#        </a>#}
+{#    </li>#}
+
+    <li class="tab active">
+        <a href="">
+            <span><i class="fa fa-rub hidden-sm"></i></span>
+            <span class="hidden-xs">Вкладка 2</span>
+        </a>
+    </li>
+
+{#    <li class="tab{% if user_menu == 'history' %} active{% endif %}">#}
+{#        <a href="{% url 'tvadmin:user_history' showuser.id %}">#}
+{#            <span><i class="fa fa-search hidden-sm"></i></span>#}
+{#            <span class="hidden-xs">{% trans 'History' %}</span>#}
+{#        </a>#}
+{#    </li>#}
+
+    <li class="tab{% if user_menu == 'settings' %} active{% endif %}">
+        <a href="">
+            <span><i class="fa fa-cog hidden-sm"></i></span>
+            <span class="hidden-xs">Вкладка 3</span>
+        </a>
+    </li>
+</ul>

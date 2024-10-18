@@ -3,7 +3,7 @@ from django.template.loader import render_to_string
 from rest_framework import serializers
 
 from hero.form import HeroForm
-from hero.models import Storage, Hero, StorageRow, InventoryItem
+from hero.models import Storage, Hero, StorageRow, HeroEquipment
 from items.models import Item
 
 
@@ -12,14 +12,14 @@ class StorageRowInline(admin.TabularInline):
     extra = 0
 
 
-class InventoryItemInline(admin.TabularInline):
-    model = InventoryItem
+class HeroEquipmentInline(admin.TabularInline):
+    model = HeroEquipment
     extra = 0
 
 
 @admin.register(Hero)
 class HeroAdmin(admin.ModelAdmin):
-    inlines = (InventoryItemInline,)
+    inlines = (HeroEquipmentInline,)
     readonly_fields = ('hp', 'armor', 'damage', 'weight')
 
     def hp(self, obj):

@@ -1,0 +1,183 @@
+{% load static %}
+<table>
+    <tr>
+        <td>
+            ГОЛОВА
+            <br>
+            <img id="headImage" src="
+                {% if equipment.head.image %}
+                    {{ equipment.head.image }}
+                {% else %}
+                    {% static "equipment_slot.png" %}
+                {% endif %}
+            " height="64" width="64">
+        </td>
+        <td colspan="3" rowspan="5">
+            <img src="{% static 'crusader-paper-doll.jpg' %}">
+        </td>
+        <td>
+            РУКИ
+            <br>
+            <img id="handsImage" src="
+                {% if equipment.hands.image %}
+                    {{ equipment.hands.image }}
+                {% else %}
+                    {% static "equipment_slot.png" %}
+                {% endif %}
+            " height="64" width="64">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            ШЕЯ
+            <br>
+            <img id="neckImage" src="
+                {% if equipment.neck.image %}
+                    {{ equipment.neck.image }}
+                {% else %}
+                    {% static "equipment_slot.png" %}
+                {% endif %}
+            " height="64" width="64">
+        </td>
+        <td>
+            ПОЯС
+            <br>
+            <img id="beltImage" src="
+                {% if equipment.belt.image %}
+                    {{ equipment.belt.image }}
+                {% else %}
+                    {% static "equipment_slot.png" %}
+                {% endif %}
+            " height="64" width="64">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            ПЛЕЧИ
+            <br>
+            <img id="shouldersImage" src="
+                {% if equipment.shoulders.image %}
+                    {{ equipment.shoulders.image }}
+                {% else %}
+                    {% static "equipment_slot.png" %}
+                {% endif %}
+            " height="64" width="64">
+        </td>
+        <td>
+            НОГИ
+            <br>
+            <img id="legsImage" src="
+                {% if equipment.legs.image %}
+                    {{ equipment.legs.image }}
+                {% else %}
+                    {% static "equipment_slot.png" %}
+                {% endif %}
+            " height="64" width="64">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            СПИНА
+            <br>
+            <img id="backImage" src="
+                {% if equipment.back.image %}
+                    {{ equipment.back.image }}
+                {% else %}
+                    {% static "equipment_slot.png" %}
+                {% endif %}
+            " height="64" width="64">
+        </td>
+        <td>
+            СТОПЫ
+            <br>
+            <img id="feetImage" src="
+                {% if equipment.feet.image %}
+                    {{ equipment.feet.image }}
+                {% else %}
+                    {% static "equipment_slot.png" %}
+                {% endif %}
+            " height="64" width="64">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            ТОРС
+            <br>
+            <img id="torsoImage" src="
+                {% if equipment.torso.image %}
+                    {{ equipment.torso.image }}
+                {% else %}
+                    {% static "equipment_slot.png" %}
+                {% endif %}
+            " height="64" width="64">
+        </td>
+        <td>
+            КОЛЬЦО 1
+            <br>
+            <img id="ring1Image" src="
+                {% if equipment.ring1.image %}
+                    {{ equipment.ring1.image }}
+                {% else %}
+                    {% static "equipment_slot.png" %}
+                {% endif %}
+            " height="64" width="64">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            ????
+            <br>
+            <img id="extraSlotImage" src="
+                {% if equipment.extra_slot.image %}
+                    {{ equipment.extra_slot.image }}
+                {% else %}
+                    {% static "equipment_slot.png" %}
+                {% endif %}
+            " height="64" width="64">
+        </td>
+        <td>
+            ПР. РУКА
+            <br>
+            <img id="rightHandImage" src="
+                {% if equipment.right_hand.image %}
+                    {{ equipment.right_hand.image }}
+                {% else %}
+                    {% static "equipment_slot.png" %}
+                {% endif %}
+            " height="64" width="64">
+        </td>
+        <td>
+            ЛЕВ. РУКА
+            <br>
+            <img id="leftHandImage" src="
+                {% if equipment.left_hand.image %}
+                    {{ equipment.left_hand.image }}
+                {% else %}
+                    {% static "equipment_slot.png" %}
+                {% endif %}
+            " height="64" width="64">
+        </td>
+        <td>
+            СПЕЦ СЛОТ
+            <br>
+            <img id="specialSlotImage" src="
+                {% if equipment.special_slot.image %}
+                    {{ equipment.special_slot.image }}
+                {% else %}
+                    {% static "equipment_slot.png" %}
+                {% endif %}
+            " height="64" width="64">
+        </td>
+        <td>
+            КОЛЬЦО 2
+            <br>
+            <img id="ring2Image" src="
+                {% if equipment.ring2.image %}
+                    {{ equipment.ring2.image }}
+                {% else %}
+                    {% static "equipment_slot.png" %}
+                {% endif %}
+            " height="64" width="64">
+        </td>
+    </tr>
+</table>

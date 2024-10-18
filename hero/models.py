@@ -46,7 +46,7 @@ class StorageRow(models.Model):
     storage = models.ForeignKey(Storage, on_delete=models.DO_NOTHING)
 
 
-class InventoryItem(models.Model):
+class HeroEquipment(models.Model):
     """
     Предметы, надетые на героя
     """
@@ -54,4 +54,15 @@ class InventoryItem(models.Model):
     slot = models.CharField(choices=Item.Slots.choices, max_length=64)
     item = models.ForeignKey(Item, on_delete=models.DO_NOTHING)
 
-    # TODO: slot validation on save
+
+class HeroInventory(models.Model):
+    hero = models.OneToOneField(Hero, on_delete=models.DO_NOTHING)
+
+    def __str__(self):
+        return f'{self.hero.name} inventory'
+
+
+class HeroInventoryItem(models.Model):
+    item = models.ForeignKey(Item, on_delete=models.DO_NOTHING)
+    count = models.IntegerField()
+    inventory = models.ForeignKey(HeroInventory, on_delete=models.DO_NOTHING)

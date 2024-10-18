@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <meta charset="utf-8">
+{#        <meta name="viewport" content="width=device-width,initial-scale=1">#}
+{#        <link rel="shortcut icon" href="{% static "tvadmin/images/favicon.ico" %}">#}
+{#        <title>{{ tvadmin.name }} - Television over IP</title>#}
+
+{#        <link href="{% static "css/switchery.min.css" %}" rel="stylesheet">#}
+{#        <link href="{% static "css/jquery.circliful.css" %}" rel="stylesheet">#}
+        <link href="{% static "css/bootstrap-table.min.css" %}" rel="stylesheet">
+        <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet" type="text/css">
+        <link href="{% static "css/bootstrap-datetimepicker.css" %}" rel="stylesheet" type="text/css">
+        <link href="{% static "css/bootstrap-editable.css" %}" rel="stylesheet" type="text/css">
+        <link href="{% static "css/core.css" %}" rel="stylesheet" type="text/css">
+        <link href="{% static "css/icons.css" %}" rel="stylesheet" type="text/css">
+        <link href="{% static "css/components.css" %}" rel="stylesheet" type="text/css">
+        <link href="{% static "css/menu.css" %}" rel="stylesheet" type="text/css">
+        <link href="{% static "css/responsive.css" %}" rel="stylesheet" type="text/css">
+        <link href="{% static "css/multi-select.css" %}" rel="stylesheet" type="text/css">
+        <link href="{% static "css/select2.css" %}" rel="stylesheet" type="text/css">
+        <link href="{% static "css/sweet-alert.css" %}" rel="stylesheet" type="text/css">
+        <link href="{% static "css/pages.css" %}" rel="stylesheet" type="text/css">
+        <link href="{% static "css/toastr.min.css" %}" rel="stylesheet" type="text/css">
+        <link href="{% static "css/themes/purple.css"%}" rel="stylesheet" type="text/css">
+{#        <link href="{% static "jsoneditor/jsoneditor.min.css" %}" rel="stylesheet" type="text/css">#}
+{#        <link href="{% static "markdowneditor/easymde.min.css" %}" rel="stylesheet" type="text/css">#}
+    </head>
+    <body class="fixed-left">
+
+        <!-- Begin page -->
+        <div id="wrapper">
+
+            <!-- Top Bar Start -->
+            <div class="topbar">
+
+                <!-- LOGO -->
+                <div class="topbar-left">
+                    <div class="text-center">
+                        <a href="" class="logo">
+                            <img src="{% static "1218741.png" %}" height="30px" width="30px">
+                            <span>Log Hero</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Navbar -->
+                <div class="navbar navbar-default" role="navigation">
+                    <div class="container">
+                        <div class="">
+                            <div class="pull-left">
+                                <button class="button-menu-mobile open-left waves-effect">
+                                    <i class="md md-menu"></i>
+                                </button>
+                                <span class="clearfix"></span>
+                            </div>
+
+
+                            <ul class="nav navbar-nav navbar-right pull-right">
+                            <!-- Какое-то окно поиска. Непонятно, зачем мне оно -->
+{#                                <li class="hidden-xs" style="padding-top: 15px;">#}
+{#                                    <form class="pull-left hidden-xs">#}
+{#                                        <div class="form-group">#}
+{#                                            <select name="provider" class="form-control select2"#}
+{#                                                    onchange="change_staff_provider();"#}
+{#                                                    id="staff_providers"#}
+{#                                                    style="width: 250px;">#}
+{#                                            </select>#}
+{#                                        </div>#}
+{#                                    </form>#}
+{#                                </li>#}
+
+                                <li class="hidden-xs">
+                                    <a href="#" class="right-bar-toggle waves-effect waves-light"><i
+                                            class="md md-settings"></i></a>
+                                </li>
+
+                            </ul>
+                        </div>
+                        <!--/.nav-collapse -->
+                    </div>
+                </div>
+            </div>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+            <div class="left side-menu">
+                <div class="sidebar-inner slimscrollleft">
+
+                    <div id="sidebar-menu">
+                        <ul>
+                            <li class="menu-title">Title 1</li>
+
+                            <li class="has_sub">
+                                <a href="javascript:void(0);"
+                                    class="waves-effect waves-primary{% if active_menu == 'user' %} active{% endif %}">
+                                    <i class="md md-account-box"></i> <span> Span1 </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="list-unstyled">
+                                    <li><a href="">Option1</a></li>
+                                    <li><a href="">Option2<span class="label label-warning pull-right">option2 text</span></a></li>
+                                    <li><a href="">Option3</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="menu-title">Title 2</li>
+
+                        </ul>
+
+                        <div class="clearfix"></div>
+
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div>
+
+{#                <div class="user-detail">#}
+{#                    <div class="dropup">#}
+{#                        <a href="" class="dropdown-toggle profile" data-toggle="dropdown" aria-expanded="true">#}
+{#                            <img  src="{% static "tvadmin/img/avatar.jpg" %}" alt="user-img" class="img-circle">#}
+{#                            <span class="user-info-span">#}
+{#                                <h5 class="m-t-0 m-b-0">{{ user.first_name }}<br>{{ user.last_name }}</h5>#}
+{#                            </span>#}
+{#                        </a>#}
+{#                        <ul class="dropdown-menu">#}
+{#                            <li><a href="{% url 'tvadmin:settings' %}"><i class="md md-settings"></i> {% trans 'Settings' %}</a></li>#}
+{#                            <li><a href="{% url 'tvadmin:logout' %}"><i class="md md-settings-power"></i> {% trans 'Logout' %}</a></li>#}
+{#                        </ul>#}
+{##}
+{#                    </div>#}
+{#                </div>#}
+            </div>
+            <!-- Left Sidebar End -->
+
+
+{% block page %}
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="content-page">
+                {% block content %}
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="page-title-box">
+                                    <ol class="breadcrumb pull-right">
+                                        <li><a href="">надпись1</a></li>
+                                        <li class="active">надпись2</li>
+                                    </ol>
+                                    <h4 class="page-title">надпись3</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- end container -->
+                </div>
+                <!-- end content -->
+                {% endblock content %}
+
+{#                <footer class="footer text-right">#}
+{#                    <div class="col col-md-4">© {% now 'Y' %}, platform24.tv </div><div class="col col-md-4 text-center text-muted">Version {{ tvadmin.version }}</div> <div class="col col-md-4 text-danger small"><div class="pull-right">Made with <i class="fa fa-heart"></i></div></div>#}
+{#                </footer>#}
+
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Right content here -->
+            <!-- ============================================================== -->
+{% endblock page %}
+
+
+            <!-- Right Sidebar -->
+{#            <div class="side-bar right-bar">#}
+{#                <div class="nicescroll">#}
+{#                    <ul class="nav nav-tabs tabs">#}
+{#                        <li class="active tab">#}
+{#                            <a href="#settings" data-toggle="tab" aria-expanded="false">#}
+{#                                <span class="visible-xs"><i class="fa fa-envelope-o"></i></span>#}
+{#                                <span class="hidden-xs">Settings</span>#}
+{#                            </a>#}
+{#                        </li>#}
+{#                        <li class="tab">#}
+{#                            <a href="#activity" data-toggle="tab" aria-expanded="true">#}
+{#                                <span class="visible-xs"><i class="fa fa-home"></i></span>#}
+{#                                <span class="hidden-xs">Activity</span>#}
+{#                            </a>#}
+{#                        </li>#}
+{#                    </ul>#}
+{#                    <div class="tab-content">#}
+{#                        <div class="tab-pane fade in active" id="settings">#}
+{#                            <div class="row m-t-20">#}
+{#                                <div class="col-xs-8">#}
+{#                                    <h5 class="m-0">{% trans 'Webhooks' %}<a href="{% url 'tvadmin:settings_webhooks'%}"><i class="md md-edit"></i></a></h5>#}
+{#                                    <p class="text-muted m-b-0"><small>{% trans 'POST back notifications' %}</small></p>#}
+{#                                </div>#}
+{#                                <div class="col-xs-4 text-right">#}
+{#                                    <input type="checkbox" checked data-plugin="switchery" data-color="#3bafda" data-size="small"/>#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{#                            <div class="row m-t-20">#}
+{#                                <div class="col-xs-8">#}
+{#                                    <h5 class="m-0">{% trans 'API Access' %}<a href="{% url 'tvadmin:settings_tokens'%}"><i class="md md-edit"></i></a></h5>#}
+{#                                    <p class="m-b-0 text-muted"><small>Enable/Disable access<br></small></p>#}
+{#                                </div>#}
+{#                                <div class="col-xs-4 text-right">#}
+{#                                    <input type="checkbox" checked data-plugin="switchery" data-color="#3bafda" data-size="small"/>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="tab-pane fade" id="activity">#}
+{#                                <p>Comming soon</p>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+            <!-- /Right-bar -->
+
+        </div>
+        <!-- END wrapper -->
+
+    {% block scripts %}
+        <!-- Все скрипты унаследованы. Понять, какие из них нужны, а какие нет, не представляется возможным -->
+        <script src="{% static "js/jquery.min.js" %}"></script>
+        <script src="{% static "js/bootstrap.min.js" %}"></script>
+        <script src="{% static "js/sweet-alert.min.js" %}"></script>
+        <script src="{% static "js/sweet-alert-init.js" %}"></script>
+        <script src="{% static "js/moment-with-locales.min.js" %}"></script>
+        <script src="{% static "js/bootstrap-datetimepicker.min.js" %}"></script>
+        <script src="{% static "js/select2.min.js" %}"></script>
+        <script src="{% static "js/jquery.multi-select.js" %}"></script>
+
+{#        <script src="{% static "js/waves.js" %}"></script>#}
+{#        <script src="{% static "js/detect.js" %}"></script>#}
+{#        <script src="{% static "js/fastclick.js" %}"></script>#}
+{#        <script src="{% static "js/jquery.slimscroll.js" %}"></script>#}
+{#        <script src="{% static "js/toastr.min.js" %}"></script>#}
+
+        <!-- Custom main Js -->
+        <script src="{% static "js/jquery.core.js" %}"></script>
+        <script src="{% static "js/jquery.app.js" %}"></script>
+        <script src="{% static "js/bootstrap-table.min.js" %}"></script>
+        <script src="{% static "js/bootstrap-table-locale-all.min.js" %}"></script>
+
+    {% endblock scripts %}
+
+    </body>
+</html>
