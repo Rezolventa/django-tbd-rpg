@@ -1,7 +1,0 @@
-{% extends "admin/change_form.html" %}
-{% block content %}
-    {% if source == 'hero' %}
-        {% include "admin/hero_doll_form.html" with options=options custom_html=custom_html hero_form=hero_form %}
-    {% endif %}
-    {{ block.super }}
-{% endblock %}

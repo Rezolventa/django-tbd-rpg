@@ -12,8 +12,10 @@ User = get_user_model()
 class Command(BaseCommand):
     def wipe_db(self):
         Enemy.objects.all().delete()
-        Hero.objects.all().delete()
         HeroEquipment.objects.all().delete()
+        HeroInventoryItem.objects.all().delete()
+        HeroInventory.objects.all().delete()
+        Hero.objects.all().delete()
         Storage.objects.all().delete()
         StorageRow.objects.all().delete()
         Item.objects.all().delete()
@@ -48,6 +50,7 @@ class Command(BaseCommand):
     def create_weapons(self):
         iron_sword = Item.objects.create(
             name='Iron Sword',
+            image='/static/iron_sword.png',
             type=Item.Types.TYPE_EQUIPMENT,
             slot=Item.Slots.SLOT_RHAND,
             weight=2.3,
@@ -55,17 +58,18 @@ class Command(BaseCommand):
             attack_delay=6,
         )
 
-        copper_sword = Item.objects.create(
-            name='Copper Sword',
-            type=Item.Types.TYPE_EQUIPMENT,
-            slot=Item.Slots.SLOT_RHAND,
-            weight=2.2,
-            damage=12,
-            attack_delay=5,
-        )
+        # copper_sword = Item.objects.create(
+        #     name='Copper Sword',
+        #     type=Item.Types.TYPE_EQUIPMENT,
+        #     slot=Item.Slots.SLOT_RHAND,
+        #     weight=2.2,
+        #     damage=12,
+        #     attack_delay=5,
+        # )
 
         bronze_sword = Item.objects.create(
             name='Bronze Sword',
+            image='/static/bronze_sword.png',
             type=Item.Types.TYPE_EQUIPMENT,
             slot=Item.Slots.SLOT_RHAND,
             weight=2.1,
@@ -73,16 +77,16 @@ class Command(BaseCommand):
             attack_delay=5,
         )
 
-        iron_shield = Item.objects.create(
-            name='Iron Shield',
-            type=Item.Types.TYPE_EQUIPMENT,
-            slot=Item.Slots.SLOT_LHAND,
-            weight=4,
-            armor=5,
-            attack_delay=5,
-        )
+        # iron_shield = Item.objects.create(
+        #     name='Iron Shield',
+        #     type=Item.Types.TYPE_EQUIPMENT,
+        #     slot=Item.Slots.SLOT_LHAND,
+        #     weight=4,
+        #     armor=5,
+        #     attack_delay=5,
+        # )
 
-        return [iron_sword, copper_sword, bronze_sword, iron_shield]
+        return [iron_sword, bronze_sword]
 
     def create_armor(self):
         iron_helm = Item.objects.create(
@@ -104,6 +108,7 @@ class Command(BaseCommand):
 
         iron_chest = Item.objects.create(
             name='Iron Chest',
+            image='/static/iron_chest.png',
             type=Item.Types.TYPE_EQUIPMENT,
             slot=Item.Slots.SLOT_CHEST,
             weight=6,
@@ -111,6 +116,7 @@ class Command(BaseCommand):
         )
         bronze_chest = Item.objects.create(
             name='Bronze Chest',
+            image='/static/bronze_chest.png',
             type=Item.Types.TYPE_EQUIPMENT,
             slot=Item.Slots.SLOT_CHEST,
             weight=5.4,

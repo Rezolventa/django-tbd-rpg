@@ -5,24 +5,27 @@
     <table class="table table-condensed">
         {% for inventory_item in inventory %}
             <tr>
-                <td>
+            <form method="post" class="form-inline">
+                <input type="hidden" name="inventory_item_id" value="{{ inventory_item.pk }}">
+                {% csrf_token %}
+                <td width="55%">
                     {{ inventory_item.item.name }}
 {#                    {% if storage_row.item.special_text %}#}
 {#                        <span class="text-warning">[{{ storage_row.item.special_text }}]</span>#}
 {#                    {% endif %}#}
                 </td>
-                <td class="text-right">
-                    <form method="post" class="form-inline">
-                        {% csrf_token %}
-                        <input type="hidden" name="inventory_item_id" value="{{ inventory_item.pk }}">
-
-                        <input type="text" value="{{ inventory_item.count|default:inventory_item.count }}" name="weight" class="form-control input-sm" style="width: 62px;">
-                        <button type="submit" class="btn btn-sm btn-success" name="action" value="move_to_storage">
-                            <i class="fa fa-arrow-right"></i></button>
-{#                        <button class="btn btn-sm btn-danger js-delete-confirm" name="action" value="delete_content_genre">#}
-{#                            <i class="fa fa-trash"></i></button>#}
-                    </form>
+                <td>
+                    <input type="text" value="{{ inventory_item.count|default:inventory_item.count }}" name="move_count" class="form-control input-sm" style="width: 62px;">
                 </td>
+                <td>
+                    <button type="submit" class="btn btn-sm btn-success" name="action" value="move_to_storage">
+                        <i class="fa fa-arrow-right"></i></button>
+                    {% if inventory_item.item.usable %}
+                    <button type="submit" class="btn btn-sm btn-success" name="action" value="activate">
+                        <i class="fa fa-hand-o-up"></i></button>
+                    {% endif %}
+                </td>
+            </form>
             </tr>
         {% empty %}
             <tr>

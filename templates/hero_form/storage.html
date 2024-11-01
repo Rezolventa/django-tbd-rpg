@@ -5,24 +5,27 @@
     <table class="table table-condensed">
         {% for storage_row in storage %}
             <tr>
-                <td>
+            <form method="post" class="form-inline">
+                <input type="hidden" name="storage_row_id" value="{{ storage_row.pk }}">
+                {% csrf_token %}
+                <td width="55%">
                     {{ storage_row.item.name }}
 {#                    {% if storage_row.item.special_text %}#}
 {#                        <span class="text-warning">[{{ storage_row.item.special_text }}]</span>#}
 {#                    {% endif %}#}
                 </td>
-                <td class="text-right">
-                    <form method="post" class="form-inline">
-                        {% csrf_token %}
-                        <input type="hidden" name="storage_row_id" value="{{ storage_row.pk }}">
-
-                        <input type="text" value="{{ storage_row.count|default:storage_row.count }}" name="weight" class="form-control input-sm" style="width: 62px;">
-                        <button class="btn btn-sm btn-success" name="action" value="move_to_inventory">
-                            <i class="fa fa-arrow-left"></i></button>
-{#                        <button class="btn btn-sm btn-danger js-delete-confirm" name="action" value="delete_content_genre">#}
-{#                            <i class="fa fa-trash"></i></button>#}
-                    </form>
+                <td>
+                    <input type="text" value="{{ storage_row.count|default:storage_row.count }}" name="move_count" class="form-control input-sm" style="width: 62px;">
                 </td>
+                <td>
+                    <button class="btn btn-sm btn-success" name="action" value="move_to_inventory">
+                        <i class="fa fa-arrow-left"></i></button>
+                    {% if storage_row.item.usable %}
+                    <button class="btn btn-sm btn-success" name="action" value="activate">
+                        <i class="fa fa-hand-o-up"></i></button>
+                    {% endif %}
+                </td>
+            </form>
             </tr>
         {% empty %}
             <tr>

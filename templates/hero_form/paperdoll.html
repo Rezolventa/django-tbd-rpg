@@ -1,16 +1,24 @@
 {% load static %}
+{% csrf_token %}
 <table>
     <tr>
         <td>
             ГОЛОВА
             <br>
-            <img id="headImage" src="
-                {% if equipment.head.image %}
-                    {{ equipment.head.image }}
-                {% else %}
-                    {% static "equipment_slot.png" %}
-                {% endif %}
-            " height="64" width="64">
+{#            <img id="headImage" src="#}
+{#                {% if equipment.head.image %}#}
+{#                    {{ equipment.head.image }}#}
+{#                {% else %}#}
+{#                    {% static "equipment_slot.png" %}#}
+{#                {% endif %}#}
+{#            " height="64" width="64">#}
+            {% if equipment.head.image %}
+                <button class="stealth_button" name="action" value="put_off_head">
+                    <img id="headImage" src="{{ equipment.head.image }}" height="64" width="64">
+                </button>
+            {% else %}
+                <img id="headImage" src="{% static "equipment_slot.png" %}" height="64" width="64">
+            {% endif %}
         </td>
         <td colspan="3" rowspan="5">
             <img src="{% static 'crusader-paper-doll.jpg' %}">
@@ -103,13 +111,22 @@
         <td>
             ТОРС
             <br>
-            <img id="torsoImage" src="
-                {% if equipment.torso.image %}
-                    {{ equipment.torso.image }}
-                {% else %}
-                    {% static "equipment_slot.png" %}
-                {% endif %}
-            " height="64" width="64">
+{#            <img id="torsoImage" src="#}
+{#                {% if equipment.torso.image %}#}
+{#                    {{ equipment.torso.image }}#}
+{#                {% else %}#}
+{#                    {% static "equipment_slot.png" %}#}
+{#                {% endif %}#}
+{#            " height="64" width="64">#}
+
+
+            {% if equipment.chest.image %}
+                <button class="stealth_button" name="action" value="put_off_chest">
+                    <img id="torsoImage" src="{{ equipment.chest.image }}" height="64" width="64">
+                </button>
+            {% else %}
+                <img id="torsoImage" src="{% static "equipment_slot.png" %}" height="64" width="64">
+            {% endif %}
         </td>
         <td>
             КОЛЬЦО 1
@@ -138,13 +155,21 @@
         <td>
             ПР. РУКА
             <br>
-            <img id="rightHandImage" src="
-                {% if equipment.right_hand.image %}
-                    {{ equipment.right_hand.image }}
-                {% else %}
-                    {% static "equipment_slot.png" %}
-                {% endif %}
-            " height="64" width="64">
+{#            <img id="rightHandImage" src="#}
+{#                {% if equipment.right_hand.image %}#}
+{#                    {{ equipment.right_hand.image }}#}
+{#                {% else %}#}
+{#                    {% static "equipment_slot.png" %}#}
+{#                {% endif %}#}
+{#            " height="64" width="64">#}
+
+            {% if equipment.rhand.image %}
+                <button class="stealth_button" name="action" value="put_off_rhand">
+                    <img id="rightHandImage" src="{{ equipment.rhand.image }}" height="64" width="64">
+                </button>
+            {% else %}
+                <img id="rightHandImage" src="{% static "equipment_slot.png" %}" height="64" width="64">
+            {% endif %}
         </td>
         <td>
             ЛЕВ. РУКА

@@ -29,5 +29,9 @@ class Item(models.Model):
     damage = models.PositiveSmallIntegerField(null=True)
     attack_delay = models.PositiveSmallIntegerField(null=True)
 
+    @property
+    def usable(self):
+        return self.type in ['equipment']
+
     def __str__(self):
         return f'{self.pk} {self.name}'

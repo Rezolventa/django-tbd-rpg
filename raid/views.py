@@ -5,8 +5,8 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from hero.models import StorageRow, HeroInventoryItem
-from items.models import Item
+from hero.models import StorageRow, HeroInventoryItem, Hero
+from items.utils import ItemMover
 from raid.utils import send_to_raid
 
 
@@ -28,16 +28,32 @@ def base_view(request):
 
 @render_to("hero_form/user.html")
 def user_view(request):
+    hero = Hero.objects.all().first()
+
     context = {}
     context['storage'] = StorageRow.objects.all()
     context['inventory'] = HeroInventoryItem.objects.all()
     context['equipment'] = {}
-    context['equipment']['head'] = Item.objects.get(name='Iron Helm')
     if request.POST:
+        item_mover = ItemMover(hero=hero)
         if request.POST.get('action') == 'move_to_storage':
             hero_inventory_item = HeroInventoryItem.objects.get(pk=request.POST.get('inventory_item_id'))
-            StorageRow.objects.create(storage_id=4, item=hero_inventory_item.item, count=hero_inventory_item.count)
+            move_count = int(request.POST.get('move_count'))
+            item_mover.from_inventory_to_storage(hero_inventory_item, move_count)
         elif request.POST.get('action') == 'move_to_inventory':
             storage_row = StorageRow.objects.get(pk=request.POST.get('storage_row_id'))
-            HeroInventoryItem.objects.create(inventory_id=1, item=storage_row.item, count=storage_row.count)
+            move_count = int(request.POST.get('move_count'))
+            item_mover.from_storage_to_inventory(storage_row, move_count)
+        elif request.POST.get('action') == 'activate':
+            pk = request.POST.get('inventory_item_id')
+            row = HeroInventoryItem.objects.get(pk=pk)
+            # else:
+            #     row = StorageRow.objects.get(pk=pk)
+            item_mover.put_on_from_container(row)
+        elif request.POST.get('action').find('put_off') != -1:
+            slot = request.POST.get('action').replace('put_off_', '')
+            item = hero.heroequipment_set.get(slot=slot).item
+            item_mover.put_off(item)
+    for equipment in hero.heroequipment_set.all():
+        context['equipment'][equipment.slot] = equipment.item
     return context
