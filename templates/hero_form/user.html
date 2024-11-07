@@ -11,12 +11,12 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="page-title-box">
-                                    <ol class="breadcrumb pull-right">
-                                        <li><a href="">надпись1</a></li>
-                                        <li><a href="">надпись2</a></li>
-                                        <li class="active">надпись3</li>
-                                    </ol>
-                                    <h4 class="page-title">hero name</h4>
+{#                                    <ol class="breadcrumb pull-right">#}
+{#                                        <li><a href="">надпись1</a></li>#}
+{#                                        <li><a href="">надпись2</a></li>#}
+{#                                        <li class="active">надпись3</li>#}
+{#                                    </ol>#}
+                                    <h4 class="page-title">{{ hero_name}}</h4>
                                 </div>
                             </div>
                         </div>
@@ -29,19 +29,14 @@
                                     <form method="post" role="form">
 {#                                        {% csrf_token %}#}
                                         <div class="row">
-                                            <div class="col-md-5">
+                                            <div class="col-md-4">
                                                 {% include 'hero_form/paperdoll.html' %}
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                                 {% include 'hero_form/inventory.html' %}
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                                 {% include 'hero_form/storage.html' %}
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12 m-t-20">
-                                                <button type="submit" class="btn btn-primary waves-effect waves-light " name="action" value="some_value">Кнопка</button>
                                             </div>
                                         </div>
                                     </form>

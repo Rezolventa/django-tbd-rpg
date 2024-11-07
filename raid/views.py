@@ -5,7 +5,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from hero.models import StorageRow, HeroInventoryItem, Hero
+from hero.models import StorageRow, HeroInventoryRow, Hero
 from items.utils import ItemMover
 from raid.utils import send_to_raid
 
@@ -31,24 +31,27 @@ def user_view(request):
     hero = Hero.objects.all().first()
 
     context = {}
+    context['hero_name'] = hero.name
     context['storage'] = StorageRow.objects.all()
-    context['inventory'] = HeroInventoryItem.objects.all()
+    context['inventory'] = HeroInventoryRow.objects.all()
     context['equipment'] = {}
     if request.POST:
         item_mover = ItemMover(hero=hero)
         if request.POST.get('action') == 'move_to_storage':
-            hero_inventory_item = HeroInventoryItem.objects.get(pk=request.POST.get('inventory_item_id'))
+            hero_inventory_row = HeroInventoryRow.objects.get(pk=request.POST.get('inventory_row_id'))
             move_count = int(request.POST.get('move_count'))
-            item_mover.from_inventory_to_storage(hero_inventory_item, move_count)
+            item_mover.from_inventory_to_storage(hero_inventory_row, move_count)
         elif request.POST.get('action') == 'move_to_inventory':
             storage_row = StorageRow.objects.get(pk=request.POST.get('storage_row_id'))
             move_count = int(request.POST.get('move_count'))
             item_mover.from_storage_to_inventory(storage_row, move_count)
         elif request.POST.get('action') == 'activate':
-            pk = request.POST.get('inventory_item_id')
-            row = HeroInventoryItem.objects.get(pk=pk)
-            # else:
-            #     row = StorageRow.objects.get(pk=pk)
+            if pk := request.POST.get('inventory_row_id'):
+                row = HeroInventoryRow.objects.get(pk=pk)
+            elif pk := request.POST.get('storage_row_id'):
+                row = StorageRow.objects.get(pk=pk)
+            else:
+                raise Exception('Unknown parameter in action "activate"')
             item_mover.put_on_from_container(row)
         elif request.POST.get('action').find('put_off') != -1:
             slot = request.POST.get('action').replace('put_off_', '')

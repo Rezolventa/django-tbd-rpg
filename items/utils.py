@@ -1,6 +1,6 @@
 from django.db.transaction import atomic
 
-from hero.models import HeroInventoryItem, StorageRow, HeroEquipment, Storage, HeroInventory
+from hero.models import HeroInventoryRow, StorageRow, HeroEquipment, Storage, HeroInventory
 from items.models import Item
 
 
@@ -10,17 +10,17 @@ class ItemMover:
         self.inventory = self.hero.heroinventory
         self.storage = self.hero.storage
 
-    def from_inventory_to_storage(self, hero_inventory_item: HeroInventoryItem, move_count: int) -> None:
+    def from_inventory_to_storage(self, hero_inventory_row: HeroInventoryRow, move_count: int) -> None:
         with atomic():
-            hero_inventory_item.inventory.remove(hero_inventory_item, move_count)
-            self.storage.add(hero_inventory_item.item_id, move_count)
+            hero_inventory_row.inventory.remove(hero_inventory_row, move_count)
+            self.storage.add(hero_inventory_row.item_id, move_count)
 
     def from_storage_to_inventory(self, storage_row: StorageRow, move_count: int) -> None:
         with atomic():
             storage_row.storage.remove(storage_row, move_count)
             self.inventory.add(storage_row.item_id, move_count)
 
-    def put_on_from_container(self, container_row: StorageRow | HeroInventoryItem):
+    def put_on_from_container(self, container_row: StorageRow | HeroInventoryRow):
         with atomic():
             old_item = self.hero.put_off(container_row.item.slot)
 

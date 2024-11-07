@@ -19,20 +19,20 @@ class Hero(models.Model):
 
     @property
     def armor(self):
-        result = self.inventoryitem_set.filter(item__armor__isnull=False).aggregate(total_armor=Sum('item__armor'))
+        result = self.heroequipment_set.filter(item__armor__isnull=False).aggregate(total_armor=Sum('item__armor'))
         return result.get('total_armor')
 
     @property
     def damage(self):
-        result = self.inventoryitem_set.filter(item__damage__isnull=False).aggregate(total_damage=Sum('item__damage'))
+        result = self.heroequipment_set.filter(item__damage__isnull=False).aggregate(total_damage=Sum('item__damage'))
         return result.get('total_damage')
 
     @property
     def weight(self):
-        result = self.inventoryitem_set.filter(item__weight__isnull=False).aggregate(total_weight=Sum('item__weight'))
+        result = self.heroequipment_set.filter(item__weight__isnull=False).aggregate(total_weight=Sum('item__weight'))
         return result.get('total_weight')
 
-    def put_off(self, slot: Item.Slots):
+    def put_off(self, slot: Item.Slots) -> Item | None:
         try:
             hero_equipment = self.heroequipment_set.get(slot=slot)
             old_item = hero_equipment.item
@@ -41,14 +41,13 @@ class Hero(models.Model):
         except HeroEquipment.DoesNotExist:
             pass
 
-    def put_on(self, item: Item):
+    def put_on(self, item: Item) -> None:
         if self.heroequipment_set.filter(slot=item.slot).exists():
             raise Exception("Slot already in use")
         self.heroequipment_set.create(slot=item.slot, item=item)
 
 
 class Storage(models.Model):
-    # TODO: наследовать от новой модели Container в рамках DRY
     hero = models.OneToOneField(Hero, on_delete=models.DO_NOTHING)
 
     def __str__(self):
@@ -61,8 +60,9 @@ class Storage(models.Model):
             storage_row.save(update_fields=['count'])
         except StorageRow.DoesNotExist:
             self.storagerow_set.create(item_id=item_id, count=count)
-
-    def remove(self, storage_row: 'StorageRow', count: int = 1) -> None:
+    
+    @staticmethod
+    def remove(storage_row: 'StorageRow', count: int = 1) -> None:
         storage_row.count -= count
         if storage_row.count == 0:
             storage_row.delete()
@@ -94,21 +94,22 @@ class HeroInventory(models.Model):
 
     def add(self, item_id: int, count: int = 1):
         try:
-            hero_inventory_item = self.heroinventoryitem_set.get(item_id=item_id)
-            hero_inventory_item.count += count
-            hero_inventory_item.save(update_fields=['count'])
-        except HeroInventoryItem.DoesNotExist:
-            self.heroinventoryitem_set.create(item_id=item_id, count=count)
+            hero_inventory_row = self.heroinventoryrow_set.get(item_id=item_id)
+            hero_inventory_row.count += count
+            hero_inventory_row.save(update_fields=['count'])
+        except HeroInventoryRow.DoesNotExist:
+            self.heroinventoryrow_set.create(item_id=item_id, count=count)
 
-    def remove(self, hero_inventory_item: 'HeroInventoryItem', count: int = 1):
-        hero_inventory_item.count -= count
-        if hero_inventory_item.count == 0:
-            hero_inventory_item.delete()
+    @staticmethod
+    def remove(hero_inventory_row: 'HeroInventoryRow', count: int = 1):
+        hero_inventory_row.count -= count
+        if hero_inventory_row.count == 0:
+            hero_inventory_row.delete()
         else:
-            hero_inventory_item.save(update_fields=['count'])
+            hero_inventory_row.save(update_fields=['count'])
 
 
-class HeroInventoryItem(models.Model):
+class HeroInventoryRow(models.Model):
     item = models.ForeignKey(Item, on_delete=models.DO_NOTHING)
     count = models.PositiveSmallIntegerField()
     inventory = models.ForeignKey(HeroInventory, on_delete=models.DO_NOTHING)

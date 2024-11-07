@@ -3,24 +3,24 @@
         <h4 class="pull-left">Инвентарь</h4>
     </form>
     <table class="table table-condensed">
-        {% for inventory_item in inventory %}
+        {% for inventory_row in inventory %}
             <tr>
             <form method="post" class="form-inline">
-                <input type="hidden" name="inventory_item_id" value="{{ inventory_item.pk }}">
+                <input type="hidden" name="inventory_row_id" value="{{ inventory_row.pk }}">
                 {% csrf_token %}
                 <td width="55%">
-                    {{ inventory_item.item.name }}
+                    {{ inventory_row.item.name }}
 {#                    {% if storage_row.item.special_text %}#}
 {#                        <span class="text-warning">[{{ storage_row.item.special_text }}]</span>#}
 {#                    {% endif %}#}
                 </td>
                 <td>
-                    <input type="text" value="{{ inventory_item.count|default:inventory_item.count }}" name="move_count" class="form-control input-sm" style="width: 62px;">
+                    <input type="text" value="{{ inventory_row.count|default:inventory_row.count }}" name="move_count" class="form-control input-sm" style="width: 62px;">
                 </td>
                 <td>
                     <button type="submit" class="btn btn-sm btn-success" name="action" value="move_to_storage">
                         <i class="fa fa-arrow-right"></i></button>
-                    {% if inventory_item.item.usable %}
+                    {% if inventory_row.item.usable %}
                     <button type="submit" class="btn btn-sm btn-success" name="action" value="activate">
                         <i class="fa fa-hand-o-up"></i></button>
                     {% endif %}
