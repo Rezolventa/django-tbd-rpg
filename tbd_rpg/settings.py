@@ -27,6 +27,7 @@ DEBUG = True
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,6 +42,8 @@ INSTALLED_APPS = [
     'enemies',
     'django_extensions',
     'drf_spectacular',
+    'raid',
+    'websocket',
 ]
 
 MIDDLEWARE = [
@@ -75,6 +78,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'tbd_rpg.wsgi.application'
+ASGI_APPLICATION = 'tbd_rpg.asgi.application'
 
 
 # Password validation
@@ -134,4 +138,10 @@ SPECTACULAR_SETTINGS = {
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
     # OTHER SETTINGS
+}
+
+CHANNELS_LAYERS = {
+  'default': {
+    'BACKEND': 'channels.layers.InMemoryChannelLayer'
+  }
 }

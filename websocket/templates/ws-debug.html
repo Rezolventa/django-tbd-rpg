@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Debug</title>
+    <style>
+        #chat-log {
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-log"></div>
+
+    <script>
+        const chatLog = document.querySelector('#chat-log');
+
+        const ws = new WebSocket(`ws://${window.location.host}/ws/`);
+
+        ws.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            if (data.content_type === 'notifiable') {
+                const message = document.createElement('div');
+                // Получаем сообщение из поля message в контенте
+                message.textContent = data.content.message;
+                chatLog.appendChild(message);
+                chatLog.scrollTop = chatLog.scrollHeight;
+            }
+        };
+
+        ws.onclose = function(e) {
+            console.log('WebSocket connection closed');
+        };
+    </script>
+</body>
+</html>

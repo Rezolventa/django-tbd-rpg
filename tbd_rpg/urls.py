@@ -10,6 +10,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('trade.urls', namespace='trade')),
     path('api/', include('raid.urls', namespace='raid')),
+    path('api/websocket/', include('websocket.urls', namespace='websocket')),
 ]
 
 # raid/send_hero
