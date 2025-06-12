@@ -30,7 +30,7 @@ def base_view(request):
 def user_view(request):
     hero = Hero.objects.all().first()
 
-    context = {}
+    context = dict()
     context['hero_name'] = hero.name
     context['storage'] = StorageRow.objects.all()
     context['inventory'] = HeroInventoryRow.objects.all()
@@ -59,4 +59,10 @@ def user_view(request):
             item_mover.put_off(item)
     for equipment in hero.heroequipment_set.all():
         context['equipment'][equipment.slot] = equipment.item
+    return context
+
+
+@render_to("raid_form/raid.html")
+def raid_view(request):
+    context = {}
     return context

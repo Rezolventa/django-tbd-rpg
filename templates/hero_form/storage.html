@@ -9,10 +9,8 @@
                 <input type="hidden" name="storage_row_id" value="{{ storage_row.pk }}">
                 {% csrf_token %}
                 <td width="55%">
+                    <span class="text-warning">[{{ storage_row.count }}]</span>
                     {{ storage_row.item.name }}
-{#                    {% if storage_row.item.special_text %}#}
-{#                        <span class="text-warning">[{{ storage_row.item.special_text }}]</span>#}
-{#                    {% endif %}#}
                 </td>
                 <td>
                     <input type="text" value="{{ storage_row.count|default:storage_row.count }}" name="move_count" class="form-control input-sm" style="width: 62px;">

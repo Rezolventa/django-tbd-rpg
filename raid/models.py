@@ -7,6 +7,8 @@ def empty_list():
 
 class Location(models.Model):
     """
+    Основная идея: состояние противников и состояние лута шэрится между игроками, это вносит элемент MMO.
+
     Комментарий к метаданным.
 
     enemy_info - содержит данные о противниках, которые спавнятся на данной локации
@@ -53,7 +55,9 @@ class Location(models.Model):
     loot_state_info - содержит данные о состоянии лута
     """
     name = models.CharField()
+    description = models.CharField(null=True)
     enemy_info = models.JSONField(default=empty_list)
     enemy_state_info = models.JSONField(default=empty_list)
     loot_info = models.JSONField(default=empty_list)
     loot_state_info = models.JSONField(default=empty_list)
+    image = models.ImageField(upload_to='static')

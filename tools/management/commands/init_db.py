@@ -5,6 +5,7 @@ from django.db import transaction
 from enemies.models import Enemy
 from hero.models import Hero, Storage, StorageRow, HeroEquipment, HeroInventory, HeroInventoryRow
 from items.models import Item
+from raid.models import Location
 
 User = get_user_model()
 
@@ -19,6 +20,7 @@ class Command(BaseCommand):
         Storage.objects.all().delete()
         StorageRow.objects.all().delete()
         Item.objects.all().delete()
+        Location.objects.all().delete()
 
     def handle(self, *args, **options):
         with transaction.atomic():
@@ -39,13 +41,15 @@ class Command(BaseCommand):
             for weapon in self.create_weapons() + self.create_armor():
                 StorageRow.objects.create(storage=storage, item=weapon, count=1)
 
-            Enemy.objects.create(
+            boar = Enemy.objects.create(
                 name='Дикий кабан',
                 hp=60,
                 armor=1,
                 attack=7,
                 attack_delay=350,
             )
+
+            self.create_locations(boar)
 
     def create_weapons(self):
         iron_sword = Item.objects.create(
@@ -123,3 +127,63 @@ class Command(BaseCommand):
             armor=4,
         )
         return [iron_helm, bronze_helm, iron_chest, bronze_chest]
+
+    def create_locations(self, boar: Enemy):
+        Location.objects.create(
+            name='Пригородный лес',
+            description='Территории у городских стен не считаются довольно безопасными.',
+            enemy_info=[
+                {
+                    "enemies": {
+                        "id": boar.id,
+                        "quantity": 1
+                    },
+                    "respawn_cooldown": 60
+                },
+                {
+                    "enemies": {
+                        "id": boar.id,
+                        "quantity": 2
+                    },
+                    "respawn_cooldown": 60
+                },
+            ],
+            enemy_state_info=[
+                {
+                    "enemies": {
+                        "id": boar.id,
+                        "quantity": 1
+                    },
+                    "respawn_cooldown": 60
+                },
+                {
+                    "enemies": {
+                        "id": boar.id,
+                        "quantity": 2
+                    },
+                    "respawn_cooldown": 60
+                },
+            ],
+            loot_info=[
+                {
+                    "loot": [
+                        {
+                            "quality": 1,
+                            "quantity": 3
+                        },
+                    ],
+                    "respawn_cooldown": 60
+                },
+            ],
+            loot_state_info=[
+                {
+                    "loot": [
+                        {
+                            "quality": 1,
+                            "quantity": 3
+                        },
+                    ],
+                    "respawn_cooldown": 60
+                },
+            ]
+        )

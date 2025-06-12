@@ -1,4 +1,5 @@
 {#<div class="card-box">#}
+{% load static %}
     <form method="post" class="form-inline text-right">
         <h4 class="pull-left">Инвентарь</h4>
     </form>
@@ -9,10 +10,11 @@
                 <input type="hidden" name="inventory_row_id" value="{{ inventory_row.pk }}">
                 {% csrf_token %}
                 <td width="55%">
+                    <span class="text-warning">[{{ inventory_row.count }}]</span>
                     {{ inventory_row.item.name }}
-{#                    {% if storage_row.item.special_text %}#}
-{#                        <span class="text-warning">[{{ storage_row.item.special_text }}]</span>#}
-{#                    {% endif %}#}
+                </td>
+                <td>
+                    <img src="{{ inventory_row.item.image }}" width="16" height="16">
                 </td>
                 <td>
                     <input type="text" value="{{ inventory_row.count|default:inventory_row.count }}" name="move_count" class="form-control input-sm" style="width: 62px;">
