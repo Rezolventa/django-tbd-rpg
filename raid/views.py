@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 
 from hero.models import StorageRow, HeroInventoryRow, Hero
 from items.utils import ItemMover
+from raid.models import Location
 from raid.utils import send_to_raid
 
 
@@ -64,5 +65,11 @@ def user_view(request):
 
 @render_to("raid_form/raid.html")
 def raid_view(request):
-    context = {}
+    hero = Hero.objects.all().first()
+
+    context = {
+        'locations': Location.objects.all(),
+        'hero_name': hero.name,
+    }
+
     return context

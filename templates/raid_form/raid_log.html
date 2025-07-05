@@ -1,0 +1,22 @@
+<div id="chat-log"></div>
+<script>
+    const chatLog = document.querySelector('#chat-log');
+
+    // Делаем WebSocket глобальным для доступа из других частей страницы
+    window.raidWs = new WebSocket(`ws://${window.location.host}/ws/`);
+
+    window.raidWs.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        if (data.content_type === 'notifiable') {
+            const message = document.createElement('div');
+            // Получаем сообщение из поля message в контенте
+            message.textContent = data.content.message;
+            chatLog.appendChild(message);
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }
+    };
+
+    window.raidWs.onclose = function(e) {
+        console.log('WebSocket connection closed');
+    };
+</script>

@@ -1,3 +1,62 @@
+<h4 class="pull-left">Локации</h4>
+<table class="table table-hover">
 {% for location in locations %}
-
+    <tr>
+        <form method="post" class="form-inline">
+            <input type="hidden" name="inventory_row_id" value="{{ location.pk }}">
+            {% csrf_token %}
+            <td width="25%">{{ location.name }}</td>
+            <td width="55%"><i>{{ location.description }}</i></td>
+            <td><i class="fa fa-tree"></i></td>
+            <td>
+                <button type="submit" class="btn btn-sm btn-success" name="action" value="move_to_storage">
+                    <i class="fa fa-arrow-right"></i></button>
+            </td>
+        </form>
+    </tr>
 {% endfor %}
+</table>
+
+<!-- Кнопка для тестирования WebSocket -->
+<div class="row" style="margin-top: 20px;">
+    <div class="col-sm-12">
+        <button id="test-ws-btn" type="button" class="btn btn-primary">
+            Тест WS
+        </button>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const testWsBtn = document.getElementById('test-ws-btn');
+    
+    testWsBtn.addEventListener('click', function() {
+        // Проверяем, что WebSocket доступен и подключен
+        if (window.raidWs && window.raidWs.readyState === WebSocket.OPEN) {
+            // Очищаем содержимое chat-log перед запуском теста
+            const chatLog = document.querySelector('#chat-log');
+            if (chatLog) {
+                chatLog.innerHTML = '';
+            }
+            
+            // Отправляем команду для запуска TestSender.send_log()
+            window.raidWs.send(JSON.stringify({
+                command: 'start_test'
+            }));
+            
+            // Делаем кнопку неактивной на время выполнения теста
+            testWsBtn.disabled = true;
+            testWsBtn.textContent = 'Тест запущен...';
+            
+            // Возвращаем кнопку в исходное состояние через 10 секунд
+            // (больше чем максимальная задержка в TestSender)
+            setTimeout(function() {
+                testWsBtn.disabled = false;
+                testWsBtn.textContent = 'Тест WS';
+            }, 10000);
+        } else {
+            alert('WebSocket не подключен. Попробуйте обновить страницу.');
+        }
+    });
+});
+</script>

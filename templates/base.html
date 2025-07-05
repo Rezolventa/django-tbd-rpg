@@ -26,11 +26,18 @@
         <link href="{% static "css/themes/purple.css"%}" rel="stylesheet" type="text/css">
 {#        <link href="{% static "jsoneditor/jsoneditor.min.css" %}" rel="stylesheet" type="text/css">#}
 {#        <link href="{% static "markdowneditor/easymde.min.css" %}" rel="stylesheet" type="text/css">#}
-        <style>
+    <style>
         .stealth_button {
             padding: 0; /* Уменьшаем отступы внутри кнопки */
             margin: 0; /* Убираем внешние отступы */
             border: none; /* Убираем границу */
+        }
+        #chat-log {
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
         }
     </style>
     </head>
@@ -65,24 +72,9 @@
 
 
                             <ul class="nav navbar-nav navbar-right pull-right">
-                            <!-- Какое-то окно поиска. Непонятно, зачем мне оно -->
-{#                                <li class="hidden-xs" style="padding-top: 15px;">#}
-{#                                    <form class="pull-left hidden-xs">#}
-{#                                        <div class="form-group">#}
-{#                                            <select name="provider" class="form-control select2"#}
-{#                                                    onchange="change_staff_provider();"#}
-{#                                                    id="staff_providers"#}
-{#                                                    style="width: 250px;">#}
-{#                                            </select>#}
-{#                                        </div>#}
-{#                                    </form>#}
-{#                                </li>#}
-
                                 <li class="hidden-xs">
-                                    <a href="#" class="right-bar-toggle waves-effect waves-light"><i
-                                            class="md md-settings"></i></a>
+                                    <a href="#" class="right-bar-toggle waves-effect waves-light"><i class="md md-settings"></i></a>
                                 </li>
-
                             </ul>
                         </div>
                         <!--/.nav-collapse -->
@@ -107,9 +99,9 @@
                                     <span class="menu-arrow"></span>
                                 </a>
                                 <ul class="list-unstyled">
-                                    <li><a href="">Option1</a></li>
-                                    <li><a href="">Option2<span class="label label-warning pull-right">option2 text</span></a></li>
-                                    <li><a href="">Option3</a></li>
+                                    <li><a href="/api/user/">Hero main page</a></li>
+                                    <li><a href="/api/raid/">Raid page</a></li>
+                                    <li><a href="">Option3<span class="label label-warning pull-right">Тест</span></a></li>
                                 </ul>
                             </li>
 

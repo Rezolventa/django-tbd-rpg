@@ -131,7 +131,7 @@ class Command(BaseCommand):
     def create_locations(self, boar: Enemy):
         Location.objects.create(
             name='Пригородный лес',
-            description='Территории у городских стен не считаются довольно безопасными.',
+            description='Территории у городских стен считаются довольно безопасными.',
             enemy_info=[
                 {
                     "enemies": {

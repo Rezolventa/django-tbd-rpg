@@ -1,0 +1,11 @@
+{% extends 'admin/change_form.html' %}
+{% load i18n admin_urls %}
+
+{% block submit_buttons_bottom %}
+    {{ block.super }}
+    {% if show_send_to_raid %}
+        <div class="submit-row">
+            <input type="button" value="{% trans 'Send to raid' %}" onclick="location.href='{% url 'admin:location-send-to-raid' original.pk %}';" />
+        </div>
+    {% endif %}
+{% endblock %}

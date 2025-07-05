@@ -1,23 +1,9 @@
 import json
-# from asyncio import sleep
 import asyncio
 from typing import Optional, Union
-from urllib.parse import parse_qs
-
-from asgiref.sync import sync_to_async
-from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
-from django.conf import settings
-from django.contrib.auth import get_user_model
 from django.shortcuts import render
 from django.views.decorators.http import require_GET
-# from jwt import decode as jwt_decode
-# from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
-# from rest_framework_simplejwt.tokens import UntypedToken
-
-# from apps.notification.constants import COMMON_GROUP
-# from apps.notification.models import HeaderNotification
-# from apps.websocket.utils import get_group_name_ws
 
 
 class TestSender:
@@ -52,11 +38,8 @@ class WsEndpoint(AsyncWebsocketConsumer):
     async def connect(self) -> None:
         try:
             await self.accept()
-
-            # Создаем экземпляр TestSender и запускаем отправку сообщений
-            sender = TestSender(self)
-            # sender.ws = self
-            await sender.send_log()
+            # Убираем автоматический запуск TestSender.send_log()
+            # Теперь он будет запускаться только по команде из receive()
 
         except Exception as e:
             await self._send('system', 500, str(e))
@@ -67,17 +50,13 @@ class WsEndpoint(AsyncWebsocketConsumer):
             try:
                 text = json.loads(text_data)
                 print(text)
-            #     if text.get('content_type') == 'execute' and text.get('content'):
-            #         # Исполняем указанную функцию
-            #         await self.__class__.__dict__[text['content']['func']](self)
-            # except KeyError:
-            #     content = {'error': 'Method not found'}
-            #     await self._send('system', 400, content)
+                # Добавляем обработку команды для запуска TestSender
+                if text.get('command') == 'start_test':
+                    sender = TestSender(self)
+                    await sender.send_log()
             except Exception as e:
-                await self._send('system', 500, e.args[1])
+                await self._send('system', 500, str(e))
         return super().receive(text_data, bytes_data)
-        # await super().receive(text_data, bytes_data)
-        # return self._send(content_type="some_content_type", status_code=200, content={"message": text_data})
 
     async def _send(
         self,

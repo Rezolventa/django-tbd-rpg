@@ -13,18 +13,20 @@
             </div>
 
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="card-box">
-                        <div class="col-md-4">
-                            {% include 'raid_form/locations.html' %}
+                <div class="card-box">
+                    <table class="table table-hover">
+                        <div class="col-lg-12">
+                            <div class="col-md-4">
+                                {% include 'raid_form/locations.html' %}
+                            </div>
+    {#                        <div class="col-md-4">#}
+    {#                            {% include 'raid_form/chosen_location.html' %}#}
+    {#                        </div>#}
+                            <div class="col-md-4">
+                                {% include 'raid_form/raid_log.html' %}
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            {% include 'raid_form/chosen_location.html' %}
-                        </div>
-                        <div class="col-md-4">
-                            {% include 'raid_form/raid_log.html' %}
-                        </div>
-                    </div>
+                    </table>
                 </div>
             </div>
         </div>
